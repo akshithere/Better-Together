@@ -35,7 +35,6 @@
     "axios": "^1.7.9",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
-    "cypress": "^13.2.0",
     "dayjs": "^1.11.10",
     "dotenv": "^16.3.1",
     "framer-motion": "^11.0.3",
@@ -71,13 +70,11 @@
     "preinstall": "command -v husky > /dev/null && husky install || true",
     "dev": "vite --port 3000",
     "build": "HUSKY=0 vite build",
+    "postinstall": "if [ \"$VERCEL\" != \"1\" ]; then npx cypress install; fi",
     "preview": "vite preview",
-    "cypress:open": "cypress open",
-    "cypress:run": "cypress run",
-    "prepare": "husky install",
     "docker-frontend": "docker-compose -f docker-compose.dev.yaml up --build"
   },
-  
+
   "browserslist": {
     "production": [
       ">0.2%",
@@ -99,6 +96,7 @@
     "eslint-plugin-cypress": "^2.13.3",
     "eslint-plugin-react": "^7.32.2",
     "husky": "^8.0.0",
+    "cypress": "^13.17.0",
     "lint-staged": "^13.2.1",
     "postcss": "^8.5.2",
     "prettier": "^3.1.1",
