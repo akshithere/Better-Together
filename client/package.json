@@ -68,14 +68,16 @@
     "zustand": "^4.4.1"
   },
   "scripts": {
+    "preinstall": "command -v husky > /dev/null && husky install || true",
     "dev": "vite --port 3000",
-    "build": "vite build",
+    "build": "HUSKY=0 vite build",
     "preview": "vite preview",
     "cypress:open": "cypress open",
     "cypress:run": "cypress run",
     "prepare": "husky install",
     "docker-frontend": "docker-compose -f docker-compose.dev.yaml up --build"
   },
+  
   "browserslist": {
     "production": [
       ">0.2%",
