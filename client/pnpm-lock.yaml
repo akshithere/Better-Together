@@ -62,9 +62,6 @@ importers:
       clsx:
         specifier: ^2.1.1
         version: 2.1.1
-      cypress:
-        specifier: ^13.2.0
-        version: 13.17.0
       dayjs:
         specifier: ^1.11.10
         version: 1.11.13
@@ -168,6 +165,9 @@ importers:
       autoprefixer:
         specifier: ^10.4.20
         version: 10.4.20(postcss@8.5.3)
+      cypress:
+        specifier: ^13.17.0
+        version: 13.17.0
       eslint:
         specifier: ^8.42.0
         version: 8.57.1
