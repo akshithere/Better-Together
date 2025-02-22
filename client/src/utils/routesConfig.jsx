@@ -33,7 +33,7 @@ const routesConfig = [
   { path: "/club/:userName", element: <Profile /> },
   { path: "/dashboard", element: <Dashboard /> },
   { path: "/events", element: <Events /> },
-  { path: "/shop", element: <Shop /> },
+  { path: "/help", element: <Shop /> },
   { path: "/trending", element: <Trending /> },
   { path: "/query", element: <Query /> },
   { path: "*", element: <Error404 /> },

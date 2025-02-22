@@ -20,7 +20,7 @@ export const NavigationMenu = () => {
 
           {/* Desktop Navigation - Fix visibility issue */}
           <div className="md:flex items-center space-x-6">
-            {["/", "/clubs", "/trending", "/events", "/shops"].map((path, index) => (
+            {["/", "/clubs", "/trending", "/events", "/help"].map((path, index) => (
               <Link
                 key={index}
                 to={path}

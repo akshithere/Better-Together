@@ -8,19 +8,8 @@ export const footerLinks = {
     { name: "Events ", path: "/events" },
   ],
   resources: [
-    { name: "GitHub", path: "https://github.com/ngoworldcommunity/NGOWorld" },
-    {
-      name: "Setup Frontend",
-      path: "https://github.com/ngoworldcommunity/NGOWorld/blob/main/docs/FrontendSetup.md",
-    },
-    {
-      name: "Setup Backend",
-      path: "https://github.com/ngoworldcommunity/NGOWorld-Backend/blob/main/docs/BackendSetup.md",
-    },
-    {
-      name: "Docker Resources",
-      path: "https://github.com/ngoworldcommunity/NGOWorld/blob/main/docs/DockerSetup.md",
-    },
+    { name: "GitHub", path: "https://github.com/akshithere/better-together" },
+    
   ],
   policies: [
     { name: "Terms of Use", path: "/terms" },
@@ -30,17 +19,17 @@ export const footerLinks = {
   social: [
     {
       name: "LinkedIn",
-      path: "https://www.linkedin.com/company/ngoworld",
+      path: "https://www.linkedin.com/in/akshit-54244a225/",
       icon: "FaLinkedinIn",
     },
     {
       name: "X",
-      path: "https://x.com/ngoworlddotorg",
+      path: "https://x.com/iamakshithere",
       icon: "FaXTwitter",
     },
     {
       name: "GitHub",
-      path: "https://github.com/ngoworldcommunity",
+      path: "https://github.com/akshithere",
       icon: "FaGithub",
     },
   ],

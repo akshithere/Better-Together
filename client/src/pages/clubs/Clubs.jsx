@@ -1,28 +1,37 @@
 import { CiFilter } from "react-icons/ci";
 import { PiCaretLeftBold } from "react-icons/pi";
 import { useNavigate } from "react-router-dom";
-import {
-  Button,
-  ClubCard,
-  Footer,
-  Loading,
-} from "../../components/shared";
 import { NavigationMenu } from "@components/ui/Navbar";
 import ComponentHelmet from "../../utils/ComponentHelmet";
+import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "@/components/ui/card";
+import { Footer } from "@components/shared";
+
+const clubs = Array.from({ length: 20 }, (_, i) => ({
+  _id: `club-${i}`,
+  name: `NGO ${i + 1}`,
+  description: "A non-profit organization focusing on social welfare.",
+}));
+
+const ClubCard = ({ club }) => {
+  return (
+    <Card className="w-full max-w-sm bg-orange-200 border border-orange-300 shadow-md rounded-2xl">
+      <CardHeader>
+        <CardTitle className="text-orange-400">{club.name}</CardTitle>
+        <CardDescription>{club.description}</CardDescription>
+      </CardHeader>
+      <CardContent>
+        <p className="text-gray-700 text-sm">Supporting communities with various initiatives.</p>
+      </CardContent>
+      <CardFooter>
+        <button className="w-full py-2 bg-orange-400 text-white rounded-lg hover:bg-orange-500 transition-all">
+          Learn More
+        </button>
+      </CardFooter>
+    </Card>
+  );
+};
 
 const Clubs = () => {
-  // demo 20 array of clubs
-  const clubs = Array.from({ length: 20 }, () => ({
-    _id: "673ac2814c6e89e58af8ca11",
-    userType: "club",
-    userName: "tamalcodes",
-    name: "God Father Org",
-    email: "tamalcodes@gmail.com",
-    password: "$2a$10$90vC9McfHXpXpLlzUOFeuulorPR9dIQ2ns37uIP5sX5ehyO5C.Mmm",
-    cart: [],
-    __v: 0,
-  }));
-
   const navigate = useNavigate();
 
   return (
@@ -30,38 +39,34 @@ const Clubs = () => {
       <ComponentHelmet type="Clubs" />
       <NavigationMenu />
 
-      <div className="clubs_header">
-        <div className="clubs_search_parent">
+      <div className="p-6 bg-orange-50 min-h-screen">
+        <div className="flex flex-col md:flex-row items-center justify-between mb-6">
           <input
             type="text"
-            name=""
-            id=""
-            placeholder="Type to begin search, or use the filters"
+            placeholder="Search for NGOs..."
+            className="p-2 border border-orange-300 rounded-lg focus:ring-2 focus:ring-orange-400"
           />
-          <button>
-            Filters <CiFilter />
+          <button className="flex items-center gap-2 text-orange-400 hover:text-orange-600 mt-2 md:mt-0">
+            Filters <CiFilter size={20} />
           </button>
         </div>
 
-        <Button
-          className="viewdashboard"
-          onClickfunction={() => {
-            navigate("/dashboard");
-          }}
+        <button
+          className="flex items-center gap-2 bg-orange-400 text-white px-4 py-2 rounded-lg hover:bg-orange-500 transition-all"
+          onClick={() => navigate("/dashboard")}
         >
-          Your Dashboard <PiCaretLeftBold />
-        </Button>
-      </div>
+          Your Dashboard <PiCaretLeftBold size={20} />
+        </button>
 
-      <div className="clubs_parent">
-        {!clubs || clubs?.length === 0 ? (
-          <Loading />
-        ) : (
-          clubs?.map((club, id) => <ClubCard club={club} key={id} />)
-        )}
+        <div className="flex flex-wrap gap-6 justify-center mt-6">
+          {clubs.map((club) => (
+            <ClubCard club={club} key={club._id} />
+          ))}
+        </div>
       </div>
-
+      
       <Footer />
+      
     </>
   );
 };

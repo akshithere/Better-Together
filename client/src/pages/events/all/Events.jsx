@@ -1,64 +1,64 @@
-import { Button, Footer, Loading } from "@components/shared";
-import { NavigationMenu } from "@components/ui/Navbar";
-import EventCard from "@components/shared/cards/event/EventCard";
-import EventSlider from "@components/shared/cards/event/EventSlider";
-import ComponentHelmet from "@utils/ComponentHelmet";
 import { CiFilter } from "react-icons/ci";
 import { FaPlus } from "react-icons/fa6";
-import "swiper/css";
-import "swiper/css/autoplay";
-import "swiper/css/navigation";
-import "swiper/css/pagination";
+import { NavigationMenu } from "@components/ui/Navbar";
+import ComponentHelmet from "@utils/ComponentHelmet";
+import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "@/components/ui/card";
+
+const events = Array.from({ length: 20 }, (_, i) => ({
+  _id: `event-${i}`,
+  name: `Event ${i + 1}`,
+  date: "March 15, 2025",
+  location: "Delhi NCR",
+  description: "An exciting event focusing on social impact and community engagement."
+}));
+
+const EventCard = ({ event }) => {
+  return (
+    <Card className="w-full max-w-sm bg-orange-200 border border-orange-300 shadow-md rounded-2xl">
+      <CardHeader>
+        <CardTitle className="text-orange-400">{event.name}</CardTitle>
+        <CardDescription>{event.date} - {event.location}</CardDescription>
+      </CardHeader>
+      <CardContent>
+        <p className="text-gray-700 text-sm">{event.description}</p>
+      </CardContent>
+      <CardFooter>
+        <button className="w-full py-2 bg-orange-400 text-white rounded-lg hover:bg-orange-500 transition-all">
+          View Details
+        </button>
+      </CardFooter>
+    </Card>
+  );
+};
 
 const Events = () => {
-  // demo 20 array of clubs
-  const events = Array.from({ length: 20 }, () => ({
-    _id: "673ac2814c6e89e58af8ca11",
-    userType: "club",
-    userName: "tamalcodes",
-    name: "God Father Org",
-    email: "tamalcodes@gmail.com",
-    password: "$2a$10$90vC9McfHXpXpLlzUOFeuulorPR9dIQ2ns37uIP5sX5ehyO5C.Mmm",
-    cart: [],
-    __v: 0,
-  }));
-
   return (
     <>
-      <ComponentHelmet type="Clubs" />
+      <ComponentHelmet type="Events" />
       <NavigationMenu />
 
-      <div className="events_header">
-        <div className="events_search_parent">
+      <div className="p-6 bg-orange-50 min-h-screen">
+        <div className="flex flex-col md:flex-row items-center justify-between mb-6">
           <input
             type="text"
-            name=""
-            id=""
-            placeholder="Type to begin search, or use the filters"
+            placeholder="Search for events..."
+            className="p-2 border border-orange-300 rounded-lg focus:ring-2 focus:ring-orange-400"
           />
-          <button>
-            Filters <CiFilter />
+          <button className="flex items-center gap-2 text-orange-400 hover:text-orange-600 mt-2 md:mt-0">
+            Filters <CiFilter size={20} />
           </button>
         </div>
 
-        <Button className="createevent">
-          <FaPlus /> Create An Event
-        </Button>
+        <button className="flex items-center gap-2 bg-orange-400 text-white px-4 py-2 rounded-lg hover:bg-orange-500 transition-all">
+          <FaPlus size={16} /> Create An Event
+        </button>
+
+        <div className="flex flex-wrap gap-6 justify-center mt-6">
+          {events.map((event) => (
+            <EventCard event={event} key={event._id} />
+          ))}
+        </div>
       </div>
-
-      <EventSlider />
-
-      <hr className="events_separator" />
-
-      <div className="events_parent">
-        {!events || events?.length === 0 ? (
-          <Loading />
-        ) : (
-          events?.map((event, id) => <EventCard event={event} key={id} />)
-        )}
-      </div>
-
-      <Footer />
     </>
   );
 };
