@@ -139,9 +139,9 @@ export const updateUserProfile = async ({ credentials }) => {
 };
 
 // Google Auth screen
-export const GoogleAuth = async () => {
+export const GoogleAuth = async (userType = "individual") => {
   try {
-    const response = await Axios.get(authEndpoints.googleLogin, {
+    const response = await Axios.get(`${authEndpoints.googleLogin}?userType=${userType}`, {
       withCredentials: true,
     });
     

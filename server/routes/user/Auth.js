@@ -169,17 +169,19 @@ router.post("/update", async (req, res) => {
 router.get("/google", (req, res) => {
   const googleAuthURL = "https://accounts.google.com/o/oauth2/v2/auth";
 
+  // Ensure userType is always present
+  const userType = req.query.userType || "individual";
+
   const params = new URLSearchParams({
     response_type: "code",
     redirect_uri: process.env.CALLBACK_URL,
-    scope: "profile email ",
+    scope: "profile email",
     client_id: process.env.CLIENT_ID,
-    state: req.query.userType,
+    state: userType,  // Ensure state is valid
   });
 
   const redirectURL = `${googleAuthURL}?${params}`;
-
-  return res.status(STATUSCODE.CREATED).json({ url: redirectURL });
+  return res.status(201).json({ url: redirectURL });
 });
 
 // Route 5  - Google Authentication callback
