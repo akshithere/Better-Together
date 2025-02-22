@@ -191,38 +191,41 @@ router.get(
     failureRedirect: "auth/login/failed",
   }),
   async (req, res) => {
-    const userType = req.query.state;
-    if (req.isAuthenticated()) {
-      const user = req.user;
-      try {
-        const existingUser = await User.findOne({ email: user.email });
+    const userType = req.query.state || "individual"; // Default to "individual" if missing
+    const user = req.user;
 
-        if (!existingUser) {
-          // This is a new account, update userType
-          await User.create({
-            email: user.email,
-            userType: userType,
-          });
-        }
-        res
-          .cookie("OAuthLoginInitiated", true, {
-            expires: new Date(new Date().getTime() + 5 * 60 * 1000),
-            httpOnly: false,
-            secure: true,
-            sameSite: "none",
-            domain: process.env.ORIGIN_DOMAIN,
-          })
-          .redirect(process.env.successURL);
-      } catch (err) {
-        res.status(STATUSCODE.INTERNAL_SERVER_ERROR).json({ message: err });
-      }
-    } else {
-      res
+    if (!user) {
+      return res
         .status(STATUSCODE.UNAUTHORIZED)
         .json({ error: true, message: STATUSMESSAGE.UNAUTHORIZED });
     }
-  },
+
+    try {
+      const existingUser = await User.findOne({ email: user.email });
+
+      if (!existingUser) {
+        // This is a new account, create it with userType
+        await User.create({
+          email: user.email,
+          userType,
+        });
+      }
+
+      res
+        .cookie("OAuthLoginInitiated", true, {
+          expires: new Date(Date.now() + 5 * 60 * 1000),
+          httpOnly: false,
+          secure: true,
+          sameSite: "none",
+          domain: process.env.ORIGIN_DOMAIN,
+        })
+        .redirect(process.env.successURL);
+    } catch (err) {
+      res.status(STATUSCODE.INTERNAL_SERVER_ERROR).json({ message: err.message });
+    }
+  }
 );
+
 
 // Route 6  - Google Authentication Failure
 router.get("/login/failed", (req, res) => {
