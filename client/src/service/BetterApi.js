@@ -144,6 +144,7 @@ export const GoogleAuth = async () => {
     const response = await Axios.get(authEndpoints.googleLogin, {
       withCredentials: true,
     });
+    
     return response.data.url;
   } catch (error) {
     alert("INTERNAL ERROR, PLEASE TRY AGAIN LATER");

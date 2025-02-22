@@ -18,17 +18,13 @@ app.use(express.json())
 
 app.use(
   cors({
-    origin: (origin, callback) => {
-      if (process.env.IGNORE_ORIGINS) {
-        callback(null, true);
-      } else {
-        callback(null, process.env.ORIGIN_URL);
-      }
-    },
-    credentials: true,
-    allowedHeaders: ["Set-Cookie", "Content-Type"],
-  }),
+    origin: process.env.ORIGIN_URL || "*", // Allow frontend origin, default to all if not set
+    credentials: true, // Allow cookies and auth headers
+    allowedHeaders: ["Content-Type", "Authorization"], // Allow commonly used headers
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"], // Allow common HTTP methods
+  })
 );
+
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
