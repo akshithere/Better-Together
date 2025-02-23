@@ -1,4 +1,3 @@
-// QueryPage.jsx
 import { useEffect, useState, useRef } from "react";
 import Query from "@components/private/query/Query.jsx";
 import { NavigationMenu } from "@components/ui/Navbar.jsx";
@@ -8,6 +7,7 @@ import { Footer } from "@components/shared";
 const QueryPage = () => {
   const [isFooterInView, setIsFooterInView] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
+  const [hideFooter, setHideFooter] = useState(false); // New state to hide footer
   const footerRef = useRef(null);
 
   useEffect(() => {
@@ -15,21 +15,24 @@ const QueryPage = () => {
       if (footerRef.current) {
         const rect = footerRef.current.getBoundingClientRect();
         const windowHeight = window.innerHeight;
-        setIsFooterInView(rect.top < windowHeight && rect.bottom > 0);
+        const isVisible = rect.top < windowHeight && rect.bottom > 0 && rect.top >= 0;
+        setIsFooterInView(isVisible);
+        console.log("Footer in view:", isVisible, "Top:", rect.top, "Bottom:", rect.bottom, "Window Height:", windowHeight);
       }
     };
 
-    // Initial check
-    checkFooterVisibility();
-    setIsLoaded(true);
+    const timer = setTimeout(() => {
+      checkFooterVisibility();
+      setIsLoaded(true);
+    }, 100);
 
-    // Add scroll listener
-    window.addEventListener('scroll', checkFooterVisibility);
-    window.addEventListener('resize', checkFooterVisibility);
+    window.addEventListener("scroll", checkFooterVisibility);
+    window.addEventListener("resize", checkFooterVisibility);
 
     return () => {
-      window.removeEventListener('scroll', checkFooterVisibility);
-      window.removeEventListener('resize', checkFooterVisibility);
+      clearTimeout(timer);
+      window.removeEventListener("scroll", checkFooterVisibility);
+      window.removeEventListener("resize", checkFooterVisibility);
     };
   }, []);
 
@@ -44,21 +47,19 @@ const QueryPage = () => {
         <link rel="canonical" href="/" />
       </Helmet>
 
-      <div className="min-h-screen flex flex-col bg-gray-100">
+      <div className="min-h-screen flex flex-col bg-gray-50">
         <NavigationMenu />
-        {isLoaded && <Query isFooterInView={isFooterInView} />}
-        <div
-          ref={footerRef}
-          className="mt-auto relative z-10"
-        >
-          <div>
+        <main className="flex-1">
+          {isLoaded && <Query isFooterInView={isFooterInView} setHideFooter={setHideFooter} />}
+        </main>
+        {!hideFooter && (
+          <div ref={footerRef} className="relative z-10 bg-white">
             <Footer />
           </div>
-        </div>
+        )}
       </div>
     </>
   );
 };
 
 export default QueryPage;
-

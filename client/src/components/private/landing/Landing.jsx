@@ -23,7 +23,7 @@ const Landing = () => {
                      transition-all duration-300 ease-in-out transform hover:scale-105 hover:bg-orange-600 hover:shadow-xl"
         >
           <Link className="text-white" to="/query">
-            <span>Find an NGO</span>
+            Find an NGO
           </Link>
         </Button>
       </div>
