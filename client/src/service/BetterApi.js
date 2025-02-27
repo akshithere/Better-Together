@@ -1,0 +1,207 @@
+// All the AXIOS API calls will be made from here to the backend
+// These functions will be exported and then imported wherever needed
+
+import Axios from "axios";
+import "react-toastify/dist/ReactToastify.css";
+import {
+  authEndpoints,
+  clubEndpoints,
+  eventEndpoints,
+  userEndpoints,
+  searchEndpoints
+} from "../integrations/ApiEndpoints";
+
+// LOGIN USER
+export const LoginUser = async (credentials) => {
+  try {
+    const User = await Axios.post(authEndpoints.signin, credentials, {
+      withCredentials: true,
+    });
+
+    return User;
+  } catch (error) {
+    return error.response;
+  }
+};
+
+// REGISTER USER
+export const RegisterUser = async (credentials) => {
+  try {
+    const User = await Axios.post(authEndpoints.signup, credentials, {
+      withCredentials: true,
+    });
+    return User;
+  } catch (error) {
+    return error.response;
+  }
+};
+
+export const handleSearch = async (searchQuery) => {
+  try {
+    const url = searchEndpoints.query(searchQuery);
+    console.log("Making request to:", url);
+
+    const response = await Axios.post(url, { searchQuery });
+    console.log("Raw AI Response:", response.data);
+
+    // Extract relevant data safely
+    // const candidates = response.data?.response?.candidates || [];
+    // if (candidates.length === 0) {
+    //   console.warn("No candidates found in the response");
+    //   return { summary: "No relevant results found.", data: [] };
+    // }
+
+    // const contentParts = candidates[0]?.content?.parts || [];
+    // if (contentParts.length === 0) {
+    //   console.warn("No content parts found in the response");
+    //   return { summary: "No content available.", data: [] };
+    // }
+
+    // const rawText = contentParts[0]?.text;
+    // let parsedData = { summary: "No valid data received.", data: [] };
+
+    // try {
+    //   parsedData = JSON.parse(rawText); // Convert string to object
+    // } catch (parseError) {
+    //   console.error("Error parsing JSON:", parseError);
+    //   return { summary: "Error parsing response", data: [] };
+    // }
+
+    // console.log("Parsed AI Data:", parsedData);
+
+    return response.data; // { summary, data }
+  } catch (error) {
+    console.error("Error searching:", error);
+    return { summary: "Error fetching data", data: [] };
+  }
+};
+
+
+
+// get all clubs
+export const GetAllClubs = async () => {
+  try {
+    const clubs = await Axios.get(clubEndpoints.all);
+    return clubs;
+  } catch (error) {
+    return error.response;
+  }
+};
+
+// REPORT PROBLEMS
+export const ReportProblem = async (credentials) => {
+  try {
+    const response = await Axios.post(userEndpoints.report, credentials);
+    if (response.data.success === true) {
+      return true;
+    } else if (response.data.message === "tryagain") {
+      return "tryagain";
+    } else {
+      return false;
+    }
+  } catch (error) {
+    alert("INTERNAL ERROR, PLEASE TRY AGAIN LATER");
+  }
+};
+
+// Complete User Profile
+export const completeProfileApiCall = async ({ credentials }) => {
+  try {
+    const response = await Axios.patch(
+      userEndpoints.completeProfile,
+      credentials,
+      {
+        withCredentials: true,
+      },
+    );
+
+    return response;
+  } catch (error) {
+    return error.response;
+  }
+};
+
+// Update User Profile
+export const updateUserProfile = async ({ credentials }) => {
+  try {
+    const response = await Axios.patch(
+      userEndpoints.updateProfile,
+      credentials,
+      {
+        withCredentials: true,
+      },
+    );
+
+    return response;
+  } catch (error) {
+    return error.response;
+  }
+};
+
+// Google Auth screen
+export const GoogleAuth = async (userType = "individual") => {
+  try {
+    const response = await Axios.get(`${authEndpoints.googleLogin}?userType=${userType}`, {
+      withCredentials: true,
+    });
+    
+    return response.data.url;
+  } catch (error) {
+    alert("INTERNAL ERROR, PLEASE TRY AGAIN LATER");
+  }
+};
+
+// Google Auth callback
+export const successCallback = async () => {
+  try {
+    const response = await Axios.get(authEndpoints.googleLoginSuccess, {
+      withCredentials: true,
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+    });
+
+    return response;
+  } catch (err) {
+    return err;
+  }
+};
+
+// Google logout
+export const Logout = async () => {
+  try {
+    const response = await Axios.get(authEndpoints.logout, {
+      withCredentials: true,
+    });
+
+    return response;
+  } catch (error) {
+    return error;
+  }
+};
+
+// create event API
+export const CreateEvent = async (event) => {
+  try {
+    const response = await Axios.post(eventEndpoints.create, event, {
+      withCredentials: true,
+    });
+
+    return response;
+  } catch (error) {
+    return error;
+  }
+};
+
+export const fetchDashboard = async () => {
+  try {
+    const response = await Axios.get(clubEndpoints.dashboard, {
+      withCredentials: true,
+    });
+
+    return response.data;
+  } catch (error) {
+    return error;
+  }
+};
