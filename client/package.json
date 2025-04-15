@@ -1,0 +1,125 @@
+{
+  "name": "better-together",
+  "version": "0.3.7",
+  "private": true,
+  "type": "module",
+  "author": {
+    "name": "akshit"
+  },
+  "description": "The frontend for NgoWorld webapp.",
+  "license": "MIT",
+  "homepage": "https://akcelify.xyz/",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/akshithere/Better-Together"
+  },
+  "keywords": [
+    "better-together"
+  ],
+  "dependencies": {
+    "@commitlint/cli": "^18.4.2",
+    "@commitlint/config-conventional": "^17.6.1",
+    "@hookform/resolvers": "^3.3.4",
+    "@radix-ui/react-navigation-menu": "^1.2.5",
+    "@radix-ui/react-slot": "^1.1.2",
+    "@reduxjs/toolkit": "^2.1.0",
+    "@studio-freight/lenis": "^1.0.33",
+    "@studio-freight/react-lenis": "^0.0.38",
+    "@tailwindcss/cli": "^4.0.6",
+    "@tanstack/react-query": "^5.28.9",
+    "@testing-library/jest-dom": "^5.16.1",
+    "@testing-library/user-event": "^14.4.3",
+    "@vercel/analytics": "^1.2.2",
+    "@vercel/speed-insights": "^1.0.10",
+    "aos": "^2.3.4",
+    "axios": "^1.7.9",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "dayjs": "^1.11.10",
+    "dotenv": "^16.3.1",
+    "framer-motion": "^11.0.3",
+    "js-cookie": "^3.0.5",
+    "lodash": "^4.17.21",
+    "lucide-react": "^0.475.0",
+    "react": "^18.2.0",
+    "react-calendar": "^4.8.0",
+    "react-dom": "^18.2.0",
+    "react-fast-marquee": "^1.6.4",
+    "react-helmet-async": "^2.0.4",
+    "react-hook-form": "^7.49.3",
+    "react-icons": "^4.10.1",
+    "react-redux": "^9.1.0",
+    "react-router-dom": "^6.26.2",
+    "react-scripts": "^5.0.1",
+    "react-select": "^5.7.5",
+    "react-spinners": "^0.13.7",
+    "react-time-picker": "^6.6.0",
+    "react-toastify": "^9.1.1",
+    "redux-persist": "^6.0.0",
+    "swiper": "^10.3.0",
+    "swr": "^2.2.5",
+    "tailwind-merge": "^3.0.1",
+    "tailwindcss-animate": "^1.0.7",
+    "url": "^0.11.0",
+    "vite-plugin-svgr": "^2.2.2",
+    "web-vitals": "^3.3.1",
+    "zod": "^3.22.4",
+    "zustand": "^4.4.1"
+  },
+  "scripts": {
+    "preinstall": "command -v husky > /dev/null && husky install || true",
+    "dev": "vite --port 3000",
+    "build": "HUSKY=0 vite build",
+    "postinstall": "if [ \"$VERCEL\" != \"1\" ]; then npx cypress install; fi",
+    "preview": "vite preview",
+    "docker-frontend": "docker-compose -f docker-compose.dev.yaml up --build"
+  },
+
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "@tailwindcss/vite": "^4.0.7",
+    "@types/node": "^22.13.2",
+    "@vitejs/plugin-react": "^4.0.0",
+    "autoprefixer": "^10.4.20",
+    "eslint": "^8.42.0",
+    "eslint-plugin-cypress": "^2.13.3",
+    "eslint-plugin-react": "^7.32.2",
+    "husky": "^8.0.0",
+    "cypress": "^13.17.0",
+    "lint-staged": "^13.2.1",
+    "postcss": "^8.5.2",
+    "prettier": "^3.1.1",
+    "tailwindcss": "^4.0.7",
+    "vite": "^6.1.1",
+    "vite-plugin-pwa": "^0.16.5"
+  },
+  "lint-staged": {
+    "*.{js,jsx}": [
+      "eslint --fix",
+      "prettier --write"
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npx lint-staged"
+    }
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "packageManager": "pnpm@9.15.4+sha512.b2dc20e2fc72b3e18848459b37359a32064663e5627a51e4c74b2c29dd8e8e0491483c3abb40789cfd578bf362fb6ba8261b05f0387d76792ed6e23ea3b1b6a0"
+}
